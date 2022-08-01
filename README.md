@@ -1,3 +1,3 @@
-redux thunk
-redux toolkit
-redux persist
+- redux thunk
+- redux toolkit
+- redux persist
