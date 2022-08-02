@@ -2,7 +2,7 @@
 import { connect } from "react-redux";
 
 import TodoApp from "../components/TodoApp";
-import { addTodo, setTodos, fetchTodos } from "../redux/todo";
+import { addTodo, setTodos, fetchTodos, checkTodo } from "../redux/todo";
 
 // tham số 1: cho biết component đc render dựa trên
 // nhánh nào của store
@@ -35,7 +35,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   addTodo: (text) => dispatch(addTodo(text)),
   setTodos: (items) => dispatch(setTodos(items)),
-  fetchTodos: () => dispatch(fetchTodos())
+  fetchTodos: () => dispatch(fetchTodos()),
+  checkTodo: (index) => dispatch(checkTodo(index))
 });
 
 // hàm connect nhận vào 2 tham số và trả về 1 function

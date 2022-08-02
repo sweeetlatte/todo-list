@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from "react";
 
-export default function TodoApp({ todos, addTodo, fetchTodos }) {
+export default function TodoApp({ todos, addTodo, fetchTodos, checkTodo }) {
     const [text, setText] = useState("");
 
-    useEffect(() => {
-        fetchTodos();
-    }, [fetchTodos]);
+    function refreshPage() {
+        window.location.reload();
+    }
+
+    function clearStorage() {
+        localStorage.clear();
+        refreshPage();
+        return;
+    }
+
+    // useEffect(() => {
+    //     fetchTodos();
+    // }, [fetchTodos]);
 
     return (
         <div>
@@ -16,14 +26,29 @@ export default function TodoApp({ todos, addTodo, fetchTodos }) {
             />
             <button
                 onClick={() => {
-                    addTodo(text);
-                    setText("");
+                    if (text !== "") {
+                        addTodo(text);
+                        setText("");
+                    }
                 }}
             >
                 Add
             </button>
+            <button onClick={clearStorage}>Logout</button>
             <ul>
-                {todos && todos.map((todo) => <li key={todo.id}>{todo.title}</li>)}
+                {todos && todos.map((todo, index) =>
+                    <li
+                        key={todo.id}
+                        onClick={() => {
+                            if (todo.completed === false) checkTodo(index)
+                        }}
+                        style={{
+                            textDecoration: todo.completed === true ? "line-through" : ""
+                        }}
+                    >
+                        {todo.title}
+                    </li>
+                )}
             </ul>
         </div>
     );

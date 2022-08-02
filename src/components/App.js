@@ -1,8 +1,8 @@
 import React from "react";
 
 import "../index.css";
-import TodoApp from "../bindings/TodoApp";
-import Login from "../bindings/Login";
+import TodoApp from "../containers/TodoApp";
+import Login from "../containers/Login";
 
 export default function App({ auth }) {
     return (

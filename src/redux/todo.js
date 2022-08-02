@@ -6,6 +6,7 @@ const initialState = {
 
 const ADD_TODO = "ADD_TODO";
 const SET_TODOS = "SET_TODOS";
+const CHECKED = "CHECKED";
 
 // action creators
 export const addTodo = (text) => ({
@@ -25,15 +26,30 @@ export const fetchTodos = () => async (dispatch) => {
   dispatch(setTodos(res.data));
 };
 
+export const checkTodo = (index) => ({
+  type: CHECKED,
+  payload: index
+})
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TODO:
       // payload là text
       // vị trí của payload chính là vị trí cuối cùng của mảng items
-      return {
+      if (state.items && state.items.length > 0)
+        return {
+          ...state,
+          items: [...state.items, {
+            id: state.items.length + 1,
+            title: action.payload,
+            completed: false
+          }]
+
+        }
+      else return {
         ...state,
-        items: [...state.items, {
-          id: state.items.length + 1,
+        items: [{
+          id: 1,
           title: action.payload,
           completed: false
         }]
@@ -44,6 +60,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         items: action.payload
       };
+    case CHECKED:
+      state.items[action.payload].completed = true;
+      return {
+        ...state,
+        items: state.items.map(item => item)
+      }
     default:
       return state;
   }
